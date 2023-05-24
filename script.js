@@ -3,7 +3,7 @@ class Publisher {
         this.items = items;
     }
     printItems() {
-        console.log(this.items);
+        console.log(this.items.map(value => value.print()));
     }
     add(item) {
         this.items.push(item);
@@ -24,7 +24,7 @@ class Article extends Item {
         this.author = author;
     }
     print() {
-        return `Title: ${this.title}. Description: ${this.description}. By author: ${this.author}`;
+        return `${super.print()} By author: ${this.author}`;
     }
 }
 class News extends Item {
@@ -34,19 +34,17 @@ class News extends Item {
         this.date = date;
     }
     print() {
-        return `Source: ${this.source}, Happened on: ${this.date}. Title: ${this.title}. Description: ${this.description}.`
+        return `Source: ${this.source}, Happened on: ${this.date}. ${super.print()}`;
     }
 }
 class Course extends Item {
     constructor (description, title, expirationDate) {
         super (description, title);
-        this.expirationDate = expirationDate;
+        this.expirationDate = new Date(expirationDate);
     }
     #isActual() {
         let curDate = new Date();
-        if (this.expirationDate < curDate)
-            return false;
-        else return true;     
+        return this.expirationDate > curDate;
     }
     print () {
         if (this.#isActual()) {
@@ -58,7 +56,7 @@ class Course extends Item {
 
 let article1 = new Article ("Школьник из 7-го класса выиграл в лотерею 1 млрд долларов", "Вот это выигрыш!", "Григорий Озеренок");
 let news1 = new News ("Источники утверждают, что мы будем жить очень хорошо", "Как мы будем жить?", "fakenews.com", "22.05.2023");
-let course1 = new Course ("Научим Вас быть счастливыми за 10000 долларов", "Курсы счастья", "22.06.2024");
+let course1 = new Course ("Научим Вас быть счастливыми за 10000 долларов", "Курсы счастья", "2024,06,22");
 
 let publisher1 = new Publisher ([article1, news1, course1]);
 
