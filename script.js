@@ -3,7 +3,7 @@ class Publisher {
         this.items = items;
     }
     printItems() {
-        console.log(this.items.map(value => value.print()));
+        this.items.map(value => console.log(value.print()));
     }
     add(item) {
         this.items.push(item);
